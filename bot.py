@@ -8,6 +8,7 @@ from tabulate import tabulate
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
+CHANNEL = os.getenv('DISCORD_CHANNEL_ID')
 
 intents = discord.Intents.default()
 intents.members = True
@@ -33,8 +34,8 @@ async def on_member_join(member):
 async def on_message(message):
     up = '\N{THUMBS UP SIGN}'
     down = '\N{THUMBS DOWN SIGN}'
-    
-    if message.channel.id == 836009066911629312 and len(message.attachments) > 0:
+
+    if str(message.channel.id) == CHANNEL and len(message.attachments) > 0:
         db.createNewImage(message)
         await message.add_reaction(up)
         await message.add_reaction(down)
